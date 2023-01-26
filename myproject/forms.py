@@ -1,23 +1,34 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, DateField, TimeField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 
 from model import User, Pet, Service
 
+
 class AddPetForm(FlaskForm):
-    pet_name = StringField('Pet Name', validators = [DataRequired()])
-    pet_type = StringField('Pet Type', validators = [DataRequired()])
-    size = StringField('Pet Size', validators = [DataRequired()])
-    weight = StringField('Weight', validators = [DataRequired()])
+    pet_name = StringField('Pet Name:', validators = [DataRequired()])
+    pet_type = SelectField('Pet Type:',
+                            choices=[('dog', 'Dog'), ('cat', 'Cat')], 
+                            validators=[DataRequired()]) 
+    size = SelectField('Pet Size:',
+                        choices=[('small', 'Small'), ('medium', 'Medium'),
+                        ('large', 'Large')], validators=[DataRequired()]) 
+    weight = StringField('Weight:', validators = [DataRequired()])
     submit = SubmitField('Add Pet')
 
+
 class AddServiceForm(FlaskForm):
-    service_type = StringField('Service', validators= [DataRequired()])
-    date = StringField('Date', validators= [DataRequired()])
-    time = StringField('Time', validators= [DataRequired()])
-    pet_id =  StringField('Pet Id', validators= [DataRequired()])
-    notes =  StringField('Pet Notes', validators= [DataRequired()])
+    service_type = SelectField('Service:', choices=[('boarding', 'Boarding'), 
+                                ('house_sitting', 'House Sitting'), 
+                                ('dog_walk', 'Dog Walking')],
+                                validators= [DataRequired()])
+    date = DateField('Date:', validators= [DataRequired()])
+    time = TimeField('Time:', validators= [DataRequired()])
+    # maybe add a durations field
+    # need to check how to grab the pet id from the current user
+    pet_id = StringField('Pet Id', validators= [DataRequired()])
+    notes =  TextAreaField('Pet Notes:', validators= [DataRequired()])
     submit = SubmitField('Add Appoitment')
 
 
@@ -25,6 +36,7 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
     submit = SubmitField('Log In')
+
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
