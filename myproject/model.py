@@ -69,16 +69,15 @@ class Service(db.Model):
     type_service = db.Column(db.String(255), nullable = False)
     date = db.Column(db.Date, nullable = False)
     time = db.Column(db.Time, nullable = False)
-    duration = db.Column(db.Time, nullable = False)
     notes = db.Column(db.String(1000))
 
     pet_id = db.Column(db.Integer, db.ForeignKey('pet.id'))
 
-    def __init__(self, type_service, date, time, duration, pet_id):
+    def __init__(self, type_service, date, time, notes, pet_id):
         self.type_service = type_service
         self.date = date
         self.time = time
-        self.duration = duration
+        self.nots = notes
         self.pet_id = pet_id
 
     def __repr__(self):

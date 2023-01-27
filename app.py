@@ -83,6 +83,24 @@ def add_pet():
 
     return render_template('add_pet.html', form=form)
 
+@app.route('/add_service', methods = ['GET', 'POST'])
+@login_required
+def add_service():
+    form = AddServiceForm()
+
+    if form.validate_on_submit():
+        service = Service(type_service=form.service_type.data,
+                           date=form.date.data,
+                           time=form.time.data,
+                           notes=form.notes.data,
+                           pet_id=form.pet_id.data)
+
+        db.session.add(service)
+        db.session.commit()
+        flash('Booking Confirmed!')
+        return redirect(url_for('welcome_user'))
+
+    return render_template('add_service.html', form=form)
 
 if __name__ == '__main__':
     connect_to_db(app)

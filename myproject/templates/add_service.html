@@ -1,0 +1,13 @@
+{% extends  "base.html" %}
+{% block content %}
+    <form method="post">
+        {{form.hidden_tag()}}
+        {{form.service_type.label}}{{form.service_type()}}<br>
+        {{form.date.label}}{{form.date()}}<br>
+        {{form.time.label}}{{form.time()}}<br>
+        {{form.notes.label}}{{form.notes()}}<br>
+        {{form.pet_id.label}}{{form.pet_id()}}<br>
+        {{form.submit()}}
+    </form>
+
+{% endblock %}
