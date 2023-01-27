@@ -1,4 +1,4 @@
-from myproject import db, login_manager
+from myproject import db, login_manager, app, connect_to_db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -10,14 +10,17 @@ class User(db.Model, UserMixin):
 
     __tablename__ = "users"
 
-    id = db.Column(db.Integer, primary_key = True, autoincoment = True)
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     email = db.Column(db.String(64), unique = True, index = True, nullable = False)
     username = db.Column(db.String(64), unique = True, nullable = False)
     password_hash = db.Column(db.String(255), nullable = False)
     phone = db.Column(db.Integer, nullable = False)
     
-    pet_id = db.Column(db.Integer, db.ForeignKey('pet.id'))
+    pet = db.relationship("Pet", backref = "users", uselist = False)
 
+    def get_pets(self):
+        return Pet.query.filter_by(user_id=self.id).all()
+        
     def __init__(self, email, username, password, phone, pet_id):
         self.email = email
         self.username = username
@@ -35,14 +38,18 @@ class Pet(db.Model):
 
     __tablename__ = "pet"
 
-    id = db.Column(db.Integer, primary_key = True, autoincoment = True)
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     name = db.Column(db.String(255), nullable = False)
     pet_type = db.Column(db.String(255), nullable = False)
     size = db.Column(db.String(255), nullable = False)
-    weight = db.Column(db.float, nullable = False)
+    weight = db.Column(db.Float, nullable = False)
 
-    user = db.relationship("User", backref = "pet", uselist = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True)
+
     service = db.relationship("Service", backref = "pet", lazy = 'dynamic')
+
+    def get_services(self):
+        return Service.query.filter_by(pet_id=self.id).all()
 
     def __init__(self, name, pet_type, size, weight):
         self.name = name
@@ -57,11 +64,11 @@ class Service(db.Model):
 
     __tablename__ = "services"
 
-    id = db.Column(db.Integer, primary_key = True, autoincoment = True)
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
     type_service = db.Column(db.String(255), nullable = False)
-    date = db.Column(db.date, nullable = False)
-    time = db.Column(db.time, nullable = False)
-    duration = db.Column(db.time, nullable = False)
+    date = db.Column(db.Date, nullable = False)
+    time = db.Column(db.Time, nullable = False)
+    duration = db.Column(db.Time, nullable = False)
     notes = db.Column(db.String(1000))
 
     pet_id = db.Column(db.Integer, db.ForeignKey('pet.id'))
@@ -75,3 +82,7 @@ class Service(db.Model):
 
     def __repr__(self):
         return f"A {self.type_service} appointment was just created!"
+
+if __name__ == '__main__':
+    connect_to_db(app)
+    app.run(debug=True)  

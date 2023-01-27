@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAr
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 
-from model import User, Pet, Service
+from myproject.model import User
 
 
 class AddPetForm(FlaskForm):
@@ -40,7 +40,8 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
-    Username = StringField('Username', validators = [DataRequired()])
+    username = StringField('Username', validators = [DataRequired()])
+    phone = StringField('Phone', validators = [DataRequired()])
     password = PasswordField('Password', validators = [DataRequired(), EqualTo('pass_confirm', message = 'Password must match!')])
     pass_confirm = PasswordField('Confirm Password', validators = [DataRequired()])
     submit = SubmitField('Register!')
