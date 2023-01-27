@@ -7,7 +7,7 @@ from myproject.model import User
 
 
 class AddPetForm(FlaskForm):
-    pet_name = StringField('Pet Name:', validators = [DataRequired()])
+    name = StringField('Pet Name:', validators = [DataRequired()])
     pet_type = SelectField('Pet Type:',
                             choices=[('dog', 'Dog'), ('cat', 'Cat')], 
                             validators=[DataRequired()]) 

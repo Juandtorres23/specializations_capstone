@@ -14,7 +14,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(64), unique = True, index = True, nullable = False)
     username = db.Column(db.String(64), unique = True, nullable = False)
     password_hash = db.Column(db.String(255), nullable = False)
-    phone = db.Column(db.Integer, nullable = False)
+    phone = db.Column(db.String, nullable = False)
     
     pet = db.relationship("Pet", backref = "users", uselist = False)
 
@@ -44,18 +44,19 @@ class Pet(db.Model):
     size = db.Column(db.String(255), nullable = False)
     weight = db.Column(db.Float, nullable = False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
 
     service = db.relationship("Service", backref = "pet", lazy = 'dynamic')
 
     def get_services(self):
         return Service.query.filter_by(pet_id=self.id).all()
 
-    def __init__(self, name, pet_type, size, weight):
+    def __init__(self, name, pet_type, size, weight, user_id):
         self.name = name
         self.pet_type = pet_type
         self.size = size
         self.weight = weight
+        self.user_id = user_id
 
     def __repr__(self):
         return f"{self.name} a {self.pet_type} was added!"

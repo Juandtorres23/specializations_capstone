@@ -14,6 +14,8 @@
         {% if current_user.is_authenticated %}
 
         <li><a href="{{url_for('logout')}}"> Log Out </a></li>
+        <li><a href="{{url_for('add_pet')}}"> Add Pet </a></li>
+
 
         {% else %}
 
@@ -22,10 +24,14 @@
 
         {% endif %}
     </ul>
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+        <p class="alert alert-warning">{{ message }}</p>
+        {% endfor %}
+        {% block content %}
 
-    {% block content %}
-
-    {% endblock %}
+        {% endblock %}
+    </div>
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 from myproject import app, db, connect_to_db
 from flask import render_template, redirect, request, url_for, flash, abort
-from flask_login import login_user, login_required, logout_user
-from myproject.model import User
+from flask_login import login_user, login_required, logout_user, current_user
+from myproject.model import User, Pet, Service
 from myproject.forms import LoginForm, RegistrationForm, AddPetForm, AddServiceForm
 
 @app.route('/')
@@ -63,6 +63,25 @@ def register():
         else:
             flash('Username already in use!')
     return render_template('register.html', form=form)
+
+@app.route('/add_pet', methods = ['GET', 'POST'])
+@login_required
+def add_pet():
+    form = AddPetForm()
+
+    if form.validate_on_submit():
+        pet = Pet(name=form.name.data,
+                    pet_type=form.pet_type.data,
+                    size=form.size.data,
+                    weight=form.weight.data,
+                    user_id=current_user.id)
+
+        db.session.add(pet)
+        db.session.commit()
+        flash('Pet added!')
+        return redirect(url_for('add_pet'))
+
+    return render_template('add_pet.html', form=form)
 
 
 if __name__ == '__main__':

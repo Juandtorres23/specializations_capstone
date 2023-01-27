@@ -17,8 +17,6 @@ def connect_to_db(flask_app):
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = flask_app
     db.init_app(flask_app)
-    db.drop_all()
-    db.create_all()
 
 login_manager.init_app(app)
 login_manager.login_view = 'login'
