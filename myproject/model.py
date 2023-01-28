@@ -17,9 +17,14 @@ class User(db.Model, UserMixin):
     phone = db.Column(db.String, nullable = False)
     
     pet = db.relationship("Pet", backref = "users", uselist = False)
+    services = db.relationship("Service", backref = "users", uselist = False)
+
 
     def get_pets(self):
         return Pet.query.filter_by(user_id=self.id).all()
+
+    def get_services(self):
+        return Service.query.filter_by(user_id=self.id).all()
         
     def __init__(self, email, username, password, phone, pet_id):
         self.email = email
@@ -72,16 +77,19 @@ class Service(db.Model):
     notes = db.Column(db.String(1000))
 
     pet_id = db.Column(db.Integer, db.ForeignKey('pet.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    def __init__(self, type_service, date, time, notes, pet_id):
+
+    def __init__(self, type_service, date, time, notes, pet_id, user_id):
         self.type_service = type_service
         self.date = date
         self.time = time
         self.nots = notes
         self.pet_id = pet_id
+        self.user_id = user_id
 
-    def __repr__(self):
-        return f"A {self.type_service} appointment was just created!"
+    # def __repr__(self):
+    #     return f"A {self.type_service} appointment was just created!"
 
 if __name__ == '__main__':
     connect_to_db(app)

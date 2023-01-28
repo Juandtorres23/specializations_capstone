@@ -1,8 +1,41 @@
 {% extends "base.html" %}
+
 {% block content %}
 
     <div>
-        <p> Congrats! You are logged in! </p>
+        {% if current_user.is_authenticated %}
+        <p> Hi {{current_user.username}} </p>
+        {% else %}
+        <p> Please login or register </p>
+        {% endif %}
     </div>
 
+    <ul>
+
+        {% for pet in pets %}
+        <li> {{ pet.name }} </li>
+        <li> {{ pet.pet_type }} </li>
+        <li> {{ pet.size }} </li>
+        <li> {{ pet.weight }} </li>  
+        <br> 
+        {% endfor %}
+
+    </ul>
+
+    <ul>
+
+        {% for service in services %}
+        <li> {{ service.type_service }} </li>
+        <li> {{ service.date }} </li>
+        <li> {{ service.time }} </li>
+        <li> {{ service.notes }} </li>  
+        <li> {{ service.pet_id }} </li>  
+
+        <br> 
+        {% endfor %}
+
+    </ul>
+
 {% endblock %}
+
+

@@ -19,5 +19,6 @@ def connect_to_db(flask_app):
     db.init_app(flask_app)
 
 
+
 login_manager.init_app(app)
 login_manager.login_view = 'login'

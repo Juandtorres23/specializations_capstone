@@ -11,7 +11,11 @@ def home():
 @app.route('/welcome')
 @login_required
 def welcome_user():
-    return render_template('profile.html')
+    pets = current_user.get_pets()
+
+    services = current_user.get_services()
+
+    return render_template('profile.html', pets=pets, services=services)
 
 @app.route('/logout')
 @login_required
@@ -36,7 +40,7 @@ def login():
 
             if next == None or not next[0]=='/':
                 next = url_for('welcome_user')
-
+            flash('You are logged in!')
             return redirect(next)
         else:
             flash('Invalid username or password')
@@ -93,7 +97,8 @@ def add_service():
                            date=form.date.data,
                            time=form.time.data,
                            notes=form.notes.data,
-                           pet_id=form.pet_id.data)
+                           pet_id=form.pet_id.data, 
+                           user_id=current_user.id)
 
         db.session.add(service)
         db.session.commit()
@@ -101,6 +106,8 @@ def add_service():
         return redirect(url_for('welcome_user'))
 
     return render_template('add_service.html', form=form)
+
+
 
 if __name__ == '__main__':
     connect_to_db(app)
