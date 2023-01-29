@@ -9,25 +9,25 @@ from myproject.model import User
 class AddPetForm(FlaskForm):
     name = StringField('Pet Name:', validators = [DataRequired()])
     pet_type = SelectField('Pet Type:',
-                            choices=[('dog', 'Dog'), ('cat', 'Cat')], 
+                            choices=[('Dog', 'Dog'), ('Cat', 'Cat')], 
                             validators=[DataRequired()]) 
     size = SelectField('Pet Size:',
-                        choices=[('small', 'Small'), ('medium', 'Medium'),
-                        ('large', 'Large')], validators=[DataRequired()]) 
+                        choices=[('Small', 'Small'), ('Medium', 'Medium'),
+                        ('Large', 'Large')], validators=[DataRequired()]) 
     weight = StringField('Weight:', validators = [DataRequired()])
     submit = SubmitField('Add Pet')
 
 
 class AddServiceForm(FlaskForm):
-    service_type = SelectField('Service:', choices=[('boarding', 'Boarding'), 
-                                ('house_sitting', 'House Sitting'), 
-                                ('dog_walk', 'Dog Walking')],
+    service_type = SelectField('Service:', choices=[('Boarding', 'Boarding'), 
+                                ('House Sitting', 'House Sitting'), 
+                                ('Dog Walking', 'Dog Walking')],
                                 validators= [DataRequired()])
     date = DateField('Date:', validators= [DataRequired()])
     time = TimeField('Time:', validators= [DataRequired()])
     # maybe add a durations field
-    # need to check how to grab the pet id from the current user
-    pet_id = StringField('Pet Id', validators= [DataRequired()])
+
+    pet_name = SelectField('Pet Name', coerce=int, validators= [DataRequired()])
     notes =  TextAreaField('Pet Notes:', validators= [DataRequired()])
     submit = SubmitField('Add Appoitment')
 

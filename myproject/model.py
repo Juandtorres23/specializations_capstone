@@ -51,7 +51,7 @@ class Pet(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
 
-    service = db.relationship("Service", backref = "pet", lazy = 'dynamic')
+    service = db.relationship("Service", cascade="delete", backref = "pet", lazy = 'dynamic')
 
     def get_services(self):
         return Service.query.filter_by(pet_id=self.id).all()
@@ -77,15 +77,17 @@ class Service(db.Model):
     notes = db.Column(db.String(1000))
 
     pet_id = db.Column(db.Integer, db.ForeignKey('pet.id'))
+    pet_name = db.Column(db.String(255), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
-    def __init__(self, type_service, date, time, notes, pet_id, user_id):
+    def __init__(self, type_service, date, time, notes, pet_id, pet_name, user_id):
         self.type_service = type_service
         self.date = date
         self.time = time
-        self.nots = notes
+        self.notes = notes
         self.pet_id = pet_id
+        self.pet_name = pet_name
         self.user_id = user_id
 
     # def __repr__(self):

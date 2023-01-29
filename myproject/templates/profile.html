@@ -26,10 +26,10 @@
 
         {% for service in services %}
         <li> {{ service.type_service }} </li>
-        <li> {{ service.date }} </li>
-        <li> {{ service.time }} </li>
+        <li> {{ service.date.strftime("%m/%d/%Y") }} </li>
+        <li> {{ service.time.strftime("%I:%m %p") }} </li>
         <li> {{ service.notes }} </li>  
-        <li> {{ service.pet_id }} </li>  
+        <li> {{ service.pet_name }} </li>  
 
         <br> 
         {% endfor %}

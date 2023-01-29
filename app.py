@@ -34,6 +34,8 @@ def login():
         if user is not None and user.check_password(form.password.data):
 
             login_user(user)
+            # need to remove one of these flashes when loging in 
+
             flash('Logged in Successfully!')
 
             next = request.args.get('next')
@@ -90,18 +92,27 @@ def add_pet():
 @app.route('/add_service', methods = ['GET', 'POST'])
 @login_required
 def add_service():
+
+    available_pets = db.session.query(Pet).filter(Pet.user_id == current_user.id)
+
+    pet_list = [(i.id, i.name) for i in available_pets]
     form = AddServiceForm()
+    form.pet_name.choices = pet_list
 
     if form.validate_on_submit():
         service = Service(type_service=form.service_type.data,
                            date=form.date.data,
                            time=form.time.data,
                            notes=form.notes.data,
-                           pet_id=form.pet_id.data, 
+                           pet_id=form.pet_name.data,
+                           pet_name= Pet.query.get(form.pet_name.data).name,
                            user_id=current_user.id)
+
 
         db.session.add(service)
         db.session.commit()
+
+        
         flash('Booking Confirmed!')
         return redirect(url_for('welcome_user'))
 
