@@ -118,8 +118,48 @@ def add_service():
 
     return render_template('add_service.html', form=form)
 
+@app.route('/update_pet/<pet_id>', methods = ['GET', 'POST'])
+def update_pet(pet_id):
+    pet = Pet.query.filter_by(id=pet_id).first()
+    form = AddPetForm()
 
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            pet.name = form.name.data,
+            pet.pet_type = form.pet_type.data,
+            pet.size = form.size.data,
+            pet.weight=form.weight.data,
+        
+            db.session.commit()
+            return redirect(url_for('update_pet', pet_id=pet.id))
+        else:
+            return redirect(url_for('welcome_user'))
 
+    else:
+        return render_template("update_pet.html", pet=pet, form=form, pet_id=pet_id)
+
+@app.route('/update_service/<service_id>', methods = ['GET', 'POST'])
+def update_service(service_id):
+    service = Service.query.filter_by(id=service_id).first()
+    form = AddServiceForm()
+
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            service.service_type = form.service_type.data,
+            service.date = form.date.data,
+            service.time = form.time.data,
+            service.pet_name = form.pet_name.data,
+            service.notes = form.notes.data
+
+        
+            db.session.commit()
+            return redirect(url_for('update_service', service_id=service.id))
+        else:
+            return redirect(url_for('welcome_user'))
+
+    else:
+        return render_template("update_service.html", service=service, form=form, service_id=service_id)
+        
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(debug=True)  

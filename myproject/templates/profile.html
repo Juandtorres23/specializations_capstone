@@ -17,6 +17,7 @@
         <li> {{ pet.pet_type }} </li>
         <li> {{ pet.size }} </li>
         <li> {{ pet.weight }} </li>  
+        <li><a href="{{ url_for('update_pet', pet_id = pet.id) }} "> Update </a></li>
         <br> 
         {% endfor %}
 
@@ -30,6 +31,7 @@
         <li> {{ service.time.strftime("%I:%m %p") }} </li>
         <li> {{ service.notes }} </li>  
         <li> {{ service.pet_name }} </li>  
+        <li><a href="{{ url_for('update_service', service_id = service.id) }} "> Update </a></li>
 
         <br> 
         {% endfor %}

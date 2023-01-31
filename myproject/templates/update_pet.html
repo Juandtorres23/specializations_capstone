@@ -1,0 +1,12 @@
+{% extends  "base.html" %}
+{% block content %}
+    <form action="{{ url_for('update_pet', pet_id = pet.id) }}" method="post">
+        {{form.hidden_tag()}}
+        {{form.name.label}}{{form.name(value=pet.name)}}<br>
+        {{form.pet_type.label}}{{form.pet_type(value=pet.pet_type)}}<br>
+        {{form.size.label}}{{form.size(value=pet.size)}}<br>
+        {{form.weight.label}}{{form.weight(value=pet.weight)}}<br>
+        {{form.submit()}}
+    </form>
+
+{% endblock %}

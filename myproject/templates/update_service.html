@@ -1,0 +1,15 @@
+{% extends  "base.html" %}
+{% block content %}
+    <form action="{{ url_for('update_service', service_id = service.id) }}" method="post">
+       
+        {{form.hidden_tag()}}
+        {{form.service_type.label}}{{form.service_type(value=service.service_type)}}<br>
+        {{form.date.label}}{{form.date(value=service.date)}}<br>
+        {{form.time.label}}{{form.time(value=service.time)}}<br>
+        {{form.notes.label}}{{form.notes(value=service.notes)}}<br>
+        {{form.pet_name.label}}{{form.pet_name(value=service.pet_name)}}<br>
+        {{form.submit()}}
+
+    </form>
+
+{% endblock %}
