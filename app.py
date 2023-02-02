@@ -2,7 +2,7 @@ from myproject import app, db, connect_to_db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from myproject.model import User, Pet, Service
-from myproject.forms import LoginForm, RegistrationForm, AddPetForm, AddServiceForm
+from myproject.forms import LoginForm, RegistrationForm, AddPetForm, AddServiceForm, get_service_form, get_pet_form
 
 @app.route('/')
 def home():
@@ -120,8 +120,9 @@ def add_service():
 
 @app.route('/update_pet/<pet_id>', methods = ['GET', 'POST'])
 def update_pet(pet_id):
+
     pet = Pet.query.filter_by(id=pet_id).first()
-    form = AddPetForm()
+    form = get_pet_form(pet.pet_type, pet.size)
 
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -131,6 +132,7 @@ def update_pet(pet_id):
             pet.weight=form.weight.data,
         
             db.session.commit()
+            flash("Updated pet successfully!")
             return redirect(url_for('update_pet', pet_id=pet.id))
         else:
             return redirect(url_for('welcome_user'))
@@ -141,25 +143,60 @@ def update_pet(pet_id):
 @app.route('/update_service/<service_id>', methods = ['GET', 'POST'])
 def update_service(service_id):
     service = Service.query.filter_by(id=service_id).first()
-    form = AddServiceForm()
+
+    available_pets = db.session.query(Pet).filter(Pet.user_id == current_user.id)
+
+    pet_list = [(i.id, i.name) for i in available_pets]
+    form = get_service_form(service.time, service.type_service, service.pet_name, service.notes)
+    form.pet_name.choices = [(service.pet_id, service.pet_name)] + pet_list
 
     if request.method == 'POST':
         if form.validate_on_submit():
-            service.service_type = form.service_type.data,
+            service.type_service = form.service_type.data,
             service.date = form.date.data,
             service.time = form.time.data,
-            service.pet_name = form.pet_name.data,
+            service.pet_id = form.pet_name.data,
+            service.pet_name = Pet.query.get(form.pet_name.data).name,
             service.notes = form.notes.data
 
         
             db.session.commit()
-            return redirect(url_for('update_service', service_id=service.id))
-        else:
+            flash("Appointment Updated Successfully!")
             return redirect(url_for('welcome_user'))
+        else:
+            flash("Something went wrong!")
+            return redirect(url_for('update_service', form=form, service_id=service.id))
 
     else:
-        return render_template("update_service.html", service=service, form=form, service_id=service_id)
-        
+        return render_template("update_service.html", service=service, form=form, service_id=service_id, pet_name=service.pet_name, time=service.time)
+
+
+@app.route('/delete_pet/<int:pet_id>')
+def delete_pet(pet_id):
+    pet_to_delete = Pet.query.filter_by(id=pet_id).first()
+
+    try:
+        db.session.delete(pet_to_delete)
+        db.session.commit()
+        flash("Pet Deleted Successfully!")
+        return redirect(url_for('welcome_user'))
+    except:
+        flash("Whoops! There was a problem. Try again!")
+        return render_template('profile.html', pet_id=pet_id)
+
+@app.route('/delete_app/<int:service_id>')
+def delete_service(service_id):
+    service_to_delete = Service.query.filter_by(id=service_id).first()
+
+    try:
+        db.session.delete(service_to_delete)
+        db.session.commit()
+        flash("Appointment Deleted Successfully!")
+        return redirect(url_for('welcome_user'))
+    except:
+        flash("Whoops! There was a problem deleting appointment. Try again!")
+        return render_template('profile.html', service_id=service_id)
+
 if __name__ == '__main__':
     connect_to_db(app)
     app.run(debug=True)  

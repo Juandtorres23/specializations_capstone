@@ -4,34 +4,38 @@
 
     <div>
         {% if current_user.is_authenticated %}
-        <p> Hi {{current_user.username}} </p>
+        <h1> Hi {{current_user.username}} </h1> 
         {% else %}
         <p> Please login or register </p>
         {% endif %}
     </div>
 
     <ul>
-
+        <h2> Pets</h2>
         {% for pet in pets %}
         <li> {{ pet.name }} </li>
         <li> {{ pet.pet_type }} </li>
         <li> {{ pet.size }} </li>
         <li> {{ pet.weight }} </li>  
         <li><a href="{{ url_for('update_pet', pet_id = pet.id) }} "> Update </a></li>
+        <li><a href="{{ url_for('delete_pet', pet_id = pet.id) }} "> Delete </a></li>
+
         <br> 
         {% endfor %}
 
     </ul>
-
+<br>
     <ul>
-
+        <h2> Upcoming Appointments</h2>
         {% for service in services %}
         <li> {{ service.type_service }} </li>
         <li> {{ service.date.strftime("%m/%d/%Y") }} </li>
-        <li> {{ service.time.strftime("%I:%m %p") }} </li>
+        <li> {{ service.time.strftime("%I:%M %p") }} </li>
         <li> {{ service.notes }} </li>  
         <li> {{ service.pet_name }} </li>  
         <li><a href="{{ url_for('update_service', service_id = service.id) }} "> Update </a></li>
+        <li><a href="{{ url_for('delete_service', service_id = service.id) }} "> Delete </a></li>
+
 
         <br> 
         {% endfor %}

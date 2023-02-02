@@ -17,6 +17,18 @@ class AddPetForm(FlaskForm):
     weight = StringField('Weight:', validators = [DataRequired()])
     submit = SubmitField('Add Pet')
 
+def get_pet_form(type_pet, pet_size):
+
+    class Editpet(AddPetForm):
+        pet_type = SelectField('Pet Type:', choices=[('Dog', 'Dog'), 
+                                ('Cat', 'Cat')], validators=[DataRequired()],
+                                default=type_pet) 
+        size = SelectField('Pet Size:',
+                            choices=[('Small', 'Small'), ('Medium', 'Medium'),
+                            ('Large', 'Large')], validators=[DataRequired()],
+                            default=pet_size) 
+    
+    return Editpet()
 
 class AddServiceForm(FlaskForm):
     service_type = SelectField('Service:', choices=[('Boarding', 'Boarding'), 
@@ -30,6 +42,20 @@ class AddServiceForm(FlaskForm):
     pet_name = SelectField('Pet Name', coerce=int, validators= [DataRequired()])
     notes =  TextAreaField('Pet Notes:', validators= [DataRequired()])
     submit = SubmitField('Add Appoitment')
+
+def get_service_form(services, name, clock, note):
+
+    class Editservice(AddServiceForm):
+        time = TimeField('Time:', validators= [DataRequired()], default=clock)
+        notes = TextAreaField('Pet Notes:', validators= [DataRequired()], default=note)
+        service_type = SelectField('Service:', choices=[('Boarding', 'Boarding'), 
+                                ('House Sitting', 'House Sitting'), 
+                                ('Dog Walking', 'Dog Walking')],
+                                validators= [DataRequired()], default=services)
+        pet_name = SelectField('Pet Name', coerce=int, validators= [DataRequired()], default=name)
+    return Editservice()
+        
+
 
 
 class LoginForm(FlaskForm):
