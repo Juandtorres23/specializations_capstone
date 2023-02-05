@@ -11,36 +11,63 @@
     </div>
 
     <ul>
+      <h2> Upcoming Appointments</h2>
+
+      <div class="row d-flex justify-content-between">
+      {% for service in services %}
+      <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+        <div class="card-header">{{ service.date.strftime("%m/%d/%Y") }}  {{ service.time.strftime("%I:%M %p") }}</div>
+        <div class="card-body">
+          <h4 class="card-title">{{ service.pet_name }}</h4>
+          <h5 class="card-title">{{ service.type_service }}</h5>
+          <p class="card-text">{{ service.notes }}</p>
+          <a href="{{ url_for('update_service', service_id = service.id) }} "> Update </a>
+          <!-- <div class="card-body">
+            <a href="{{ url_for('update_service', service_id = service.id) }} "> Update </a>
+            <a href="{{ url_for('delete_service', service_id = service.id) }} "> Delete </a>
+          </div> -->
+        </div>
+      </div>
+      <br> 
+      {% endfor %}
+      </div>
+
+    </ul>
+
+    <ul>
+
         <h2> Pets</h2>
+        <div class="row d-flex justify-content-between">
+
         {% for pet in pets %}
-        <li> {{ pet.name }} </li>
-        <li> {{ pet.pet_type }} </li>
-        <li> {{ pet.size }} </li>
-        <li> {{ pet.weight }} </li>  
-        <li><a href="{{ url_for('update_pet', pet_id = pet.id) }} "> Update </a></li>
-        <li><a href="{{ url_for('delete_pet', pet_id = pet.id) }} "> Delete </a></li>
+    
+          <div class="col-sm-l6">
+            <div class="card border-info mb-3" style="width: 14rem;">
+            <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TBdfjBYxySYLtu52o314f0rTPJlkEs5ASQ&usqp=CAU" alt="Card image cap">
+            <div class="card-body text-info">
+              <h5 class="card-title">{{ pet.name }}</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <ul class="list-group list-group-flush text-info">
+              <li class="list-group-item">Pet Type: {{ pet.pet_type }}</li>
+              <li class="list-group-item">Pet Size: {{ pet.size }}</li>
+              <li class="list-group-item">Pet Weight: {{ pet.weight }} LB</li>
+            </ul>
+            <div class="card-body">
+              <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link">Update</a>
+              <a href="{{ url_for('delete_pet', pet_id = pet.id) }}" class="card-link">Delete</a>
+            </div>
+            </div>
+          </div>
+        
 
         <br> 
         {% endfor %}
+    </div>
 
     </ul>
 <br>
-    <ul>
-        <h2> Upcoming Appointments</h2>
-        {% for service in services %}
-        <li> {{ service.type_service }} </li>
-        <li> {{ service.date.strftime("%m/%d/%Y") }} </li>
-        <li> {{ service.time.strftime("%I:%M %p") }} </li>
-        <li> {{ service.notes }} </li>  
-        <li> {{ service.pet_name }} </li>  
-        <li><a href="{{ url_for('update_service', service_id = service.id) }} "> Update </a></li>
-        <li><a href="{{ url_for('delete_service', service_id = service.id) }} "> Delete </a></li>
 
-
-        <br> 
-        {% endfor %}
-
-    </ul>
 
 {% endblock %}
 

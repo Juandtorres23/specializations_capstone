@@ -32,17 +32,13 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
 
         if user is not None and user.check_password(form.password.data):
-
             login_user(user)
-            # need to remove one of these flashes when loging in 
-
-            flash('Logged in Successfully!')
 
             next = request.args.get('next')
 
             if next == None or not next[0]=='/':
                 next = url_for('welcome_user')
-            flash('You are logged in!')
+            flash('Logged in Successfully!')
             return redirect(next)
         else:
             flash('Invalid username or password')
