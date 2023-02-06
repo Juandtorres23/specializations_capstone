@@ -1,13 +1,29 @@
 {% extends  "base.html" %}
 {% block content %}
-    <form method="post">
-        {{form.hidden_tag()}}
-        {{form.email.label}}{{form.email()}}<br>
-        {{form.username.label}}{{form.username()}}<br>
-        {{form.phone.label}}{{form.phone()}}<br>
-        {{form.password.label}}{{form.password()}}<br>
-        {{form.pass_confirm.label}}{{form.pass_confirm()}}<br>
-        {{form.submit()}}
+
+<div class="text-center d-flex justify-content-center" style="padding-top: 15rem;">
+    <form class="form-signin" method="post">
+    {{form.hidden_tag()}}
+    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+    <div class="" style="width: 18rem">
+        {{form.email.label(class="sr-only")}}{{form.email(type="email", class="form-control", placeholder="Enter email")}}
+    </div>
+    <div class="" style="width: 18rem">
+        {{form.username.label(class="sr-only")}}{{form.username(class="form-control", placeholder="Enter Username")}}
+    </div>
+    <div class="" style="width: 18rem">
+        {{form.phone.label(class="sr-only")}}{{form.phone(class="form-control", placeholder="Enter Phone Number")}}
+    </div>
+    <div class="" style="width: 18rem">
+        {{form.password.label(class="sr-only")}}{{form.password(type="password", class="form-control", placeholder="Password")}}
+    </div>
+    <div class="" style="width: 18rem">
+        {{form.pass_confirm.label(class="sr-only")}}{{form.pass_confirm(type="password", class="form-control", placeholder="Confirm Password")}}
+    </div>
+    {{form.submit(type="submit", class="btn-lg btn-primary btn-block")}}
+    <a class="text-muted" href="{{url_for('login')}}"> Log In</a>
+    
     </form>
+</div>
 
 {% endblock %}

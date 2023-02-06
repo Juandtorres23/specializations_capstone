@@ -10,6 +10,7 @@
         {% endif %}
     </div>
 
+    
     <ul>
       <h2> Upcoming Appointments</h2>
 
@@ -18,14 +19,10 @@
       <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
         <div class="card-header">{{ service.date.strftime("%m/%d/%Y") }}  {{ service.time.strftime("%I:%M %p") }}</div>
         <div class="card-body">
-          <h4 class="card-title">{{ service.pet_name }}</h4>
+          <h4 class="card-title text-warning">{{ service.pet_name }}</h4>
           <h5 class="card-title">{{ service.type_service }}</h5>
           <p class="card-text">{{ service.notes }}</p>
-          <a href="{{ url_for('update_service', service_id = service.id) }} "> Update </a>
-          <!-- <div class="card-body">
-            <a href="{{ url_for('update_service', service_id = service.id) }} "> Update </a>
-            <a href="{{ url_for('delete_service', service_id = service.id) }} "> Delete </a>
-          </div> -->
+          <a class="text-warning" href="{{ url_for('update_service', service_id = service.id) }} "> Update </a>
         </div>
       </div>
       <br> 
@@ -45,7 +42,7 @@
             <div class="card border-info mb-3" style="width: 14rem;">
             <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TBdfjBYxySYLtu52o314f0rTPJlkEs5ASQ&usqp=CAU" alt="Card image cap">
             <div class="card-body text-info">
-              <h5 class="card-title">{{ pet.name }}</h5>
+              <h5 class="card-title text-warning">{{ pet.name }}</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
             <ul class="list-group list-group-flush text-info">
@@ -54,8 +51,7 @@
               <li class="list-group-item">Pet Weight: {{ pet.weight }} LB</li>
             </ul>
             <div class="card-body">
-              <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link">Update</a>
-              <a href="{{ url_for('delete_pet', pet_id = pet.id) }}" class="card-link">Delete</a>
+              <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link text-warning">Update</a>
             </div>
             </div>
           </div>
@@ -68,7 +64,10 @@
     </ul>
 <br>
 
-
+{% block modal %} {% endblock %}
 {% endblock %}
+
+
+
 
 

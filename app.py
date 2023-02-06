@@ -116,7 +116,7 @@ def add_service():
 
 @app.route('/update_pet/<pet_id>', methods = ['GET', 'POST'])
 def update_pet(pet_id):
-
+    pets = current_user.get_pets()
     pet = Pet.query.filter_by(id=pet_id).first()
     form = get_pet_form(pet.pet_type, pet.size)
 
@@ -134,7 +134,7 @@ def update_pet(pet_id):
             return redirect(url_for('welcome_user'))
 
     else:
-        return render_template("update_pet.html", pet=pet, form=form, pet_id=pet_id)
+        return render_template("update_pet.html", pets=pets, pet=pet, form=form, pet_id=pet_id)
 
 @app.route('/update_service/<service_id>', methods = ['GET', 'POST'])
 def update_service(service_id):
