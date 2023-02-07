@@ -6,9 +6,7 @@ from flask_login import LoginManager
 login_manager = LoginManager()
 
 app = Flask(__name__)
-
 app.config['SECRET_KEY'] = 'mysecretkey'
-
 db = SQLAlchemy()
 
 def connect_to_db(flask_app):

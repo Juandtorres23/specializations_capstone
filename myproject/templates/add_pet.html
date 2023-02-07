@@ -1,12 +1,31 @@
 {% extends  "base.html" %}
 {% block content %}
-    <form method="post">
-        {{form.hidden_tag()}}
-        {{form.name.label}}{{form.name()}}<br>
-        {{form.pet_type.label}}{{form.pet_type()}}<br>
-        {{form.size.label}}{{form.size()}}<br>
-        {{form.weight.label}}{{form.weight()}}<br>
-        {{form.submit()}}
-    </form>
-
+<div class="d-flex justify-content-lg-around" style="padding-top: 2rem;">
+    <div class="card border-info text-info text-center" style="width: 28rem; ">
+        <div class="card-header text-center">Add Pet
+            <a class="btn btn-sm btn-outline-danger ml-5" href="{{ url_for('welcome_user') }} "> X </a>
+        </div>
+        <div class="card-body text-info">
+            <form method="post">
+                {{form.hidden_tag()}}
+                <div class="form-group row ">
+                    {{form.name.label(class="col-sm-3 col-form-label")}}{{form.name(class="col-sm-4 form-control", placeholder="Pet Name")}}
+                </div>
+                <div class="form-group row">
+                    {{form.pet_type.label(class="col-sm-3 col-form-label")}}{{form.pet_type(class="custom-select col-sm-4", placeholder="Choose One")}}<br>
+                </div>
+                <div class="form-group row">
+                    {{form.size.label(class="col-sm-3 col-form-label")}}{{form.size(class="custom-select col-sm-4", placeholder="Choose One")}}<br>
+                </div>
+                <div class="form-group row">
+                    {{form.weight.label(class="col-sm-3 col-form-label")}}{{form.weight(class="col-sm-4 form-control", placeholder="Pet Weight")}} LB
+                </div>
+                {{form.submit(class="btn btn-warning my-1", value="Add Pet")}}
+            </form>
+        </div>
+    </div>
+    <div>
+        <img class="img-fluid" src="https://burst.shopifycdn.com/photos/french-bulldog-gets-cozy.jpg?width=925&format=pjpg&exif=1&iptc=1"> 
+    </div>
+</div>
 {% endblock %}

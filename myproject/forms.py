@@ -18,7 +18,6 @@ class AddPetForm(FlaskForm):
     submit = SubmitField('Add Pet')
 
 def get_pet_form(type_pet, pet_size):
-
     class Editpet(AddPetForm):
         pet_type = SelectField('Pet Type:', choices=[('Dog', 'Dog'), 
                                 ('Cat', 'Cat')], validators=[DataRequired()],
@@ -27,8 +26,8 @@ def get_pet_form(type_pet, pet_size):
                             choices=[('Small', 'Small'), ('Medium', 'Medium'),
                             ('Large', 'Large')], validators=[DataRequired()],
                             default=pet_size) 
-    
     return Editpet()
+
 
 class AddServiceForm(FlaskForm):
     service_type = SelectField('Service:', choices=[('Boarding', 'Boarding'), 
@@ -38,13 +37,11 @@ class AddServiceForm(FlaskForm):
     date = DateField('Date:', validators= [DataRequired()])
     time = TimeField('Time:', validators= [DataRequired()])
     # maybe add a durations field
-
     pet_name = SelectField('Pet Name', coerce=int, validators= [DataRequired()])
     notes =  TextAreaField('Pet Notes:', validators= [DataRequired()])
     submit = SubmitField('Add Appoitment')
 
 def get_service_form(services, name, clock, note):
-
     class Editservice(AddServiceForm):
         time = TimeField('Time:', validators= [DataRequired()], default=clock)
         notes = TextAreaField('Pet Notes:', validators= [DataRequired()], default=note)
@@ -54,15 +51,12 @@ def get_service_form(services, name, clock, note):
                                 validators= [DataRequired()], default=services)
         pet_name = SelectField('Pet Name', coerce=int, validators= [DataRequired()], default=name)
     return Editservice()
-        
-
 
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
     submit = SubmitField('Log In')
-
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])

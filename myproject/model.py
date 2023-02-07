@@ -90,8 +90,8 @@ class Service(db.Model):
         self.pet_name = pet_name
         self.user_id = user_id
 
-    # def __repr__(self):
-    #     return f"A {self.type_service} appointment was just created!"
+    def __repr__(self):
+        return f"A {self.type_service} appointment was just created!"
 
 if __name__ == '__main__':
     connect_to_db(app)

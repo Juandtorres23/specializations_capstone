@@ -1,7 +1,6 @@
 {% extends  "base.html" %}
 {% block content %}
 <div class="d-flex justify-content-lg-around" style="padding-top: 5rem;">
-
     <div class="card border-info text-info text-center align-self-start" style="width: 30rem;">
         <div class="card-header text-center">Update Appointment
             <a class="btn btn-sm btn-outline-danger ml-5" href="{{ url_for('welcome_user') }} "> X </a>
@@ -10,13 +9,13 @@
         <form action="{{ url_for('update_service', service_id = service.id) }}" method="post">
             {{form.hidden_tag()}}
             <div class="form-group row ">
-            {{form.service_type.label(class="col-sm-3 col-form-label")}} {{form.service_type(class="custom-select col-sm-5", value=service.service_type, default=True)}}
+                {{form.service_type.label(class="col-sm-3 col-form-label")}} {{form.service_type(class="custom-select col-sm-5", value=service.service_type, default=True)}}
             </div>
             <div class="form-group row">
-            {{form.date.label(class="col-sm-3 col-form-label")}}{{form.date(class="custom-select col-sm-5", value=service.date)}}<br>
+                {{form.date.label(class="col-sm-3 col-form-label")}}{{form.date(class="custom-select col-sm-5", value=service.date)}}<br>
             </div>
             <div class="form-group row">
-            {{form.time.label(class="col-sm-3 col-form-label")}}{{form.time(class="custom-select col-sm-5", value=service.time)}}<br>
+                {{form.time.label(class="col-sm-3 col-form-label")}}{{form.time(class="custom-select col-sm-5", value=service.time)}}<br>
             </div>
             <div class="form-group row ">
                 {{form.pet_name.label(class="col-sm-3 col-form-label")}}{{form.pet_name(class="custom-select col-sm-5", value=service.pet_name)}}

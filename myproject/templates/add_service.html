@@ -1,13 +1,34 @@
 {% extends  "base.html" %}
 {% block content %}
-    <form method="post">
-        {{form.hidden_tag()}}
-        {{form.service_type.label}}{{form.service_type()}}<br>
-        {{form.date.label}}{{form.date()}}<br>
-        {{form.time.label}}{{form.time()}}<br>
-        {{form.notes.label}}{{form.notes()}}<br>
-        {{form.pet_name.label}}{{form.pet_name()}}<br>
-        {{form.submit()}}
-    </form>
-
+<div class="d-flex justify-content-lg-around" style="padding-top: 2rem;">
+    <div class="card border-info text-info text-center align-self-start" style="width: 40rem; ">
+        <div class="card-header text-center">Add Appointment
+            <a class="btn btn-sm btn-outline-danger ml-5" href="{{ url_for('welcome_user') }} "> X </a>
+        </div>
+        <div class="card-body text-info mr-3">
+            <form method="post">
+                {{form.hidden_tag()}}
+                <div class="form-group row ">
+                    {{form.service_type.label(class="col-sm-4 col-form-label")}}{{form.service_type(class="col-sm-6 custom-select", placeholder="Choose one")}}
+                </div>
+                <div class="form-group row">
+                    {{form.date.label(class="col-sm-4 col-form-label")}}{{form.date(class="custom-select col-sm-6", placeholder="Choose One")}}<br>
+                </div>
+                <div class="form-group row">
+                    {{form.time.label(class="col-sm-4 col-form-label")}}{{form.time(class="custom-select col-sm-6", placeholder="Choose One")}}<br>
+                </div>
+                <div class="form-group row">
+                    {{form.pet_name.label(class="col-sm-4 col-form-label")}}{{form.pet_name(class="col-sm-6 form-control", placeholder="Pet Name")}}
+                </div>
+                <div class="form-group row">
+                    {{form.notes.label(class="col-sm-4 col-form-label")}}{{form.notes(class="col-sm-8 form-control", placeholder="Notes")}}
+                </div>
+                {{form.submit(class="btn btn-warning my-1", value="Book")}}
+            </form>
+        </div>
+    </div>
+    <div>
+        <img class="img-fluid" src="https://images.pexels.com/photos/4878346/pexels-photo-4878346.jpeg" style="max-width: 450px;" > 
+    </div>
+</div>
 {% endblock %}

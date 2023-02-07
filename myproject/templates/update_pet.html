@@ -1,53 +1,44 @@
 {% extends  "base.html" %}
 {% block content %}
 <div class="d-flex justify-content-lg-around" style="padding-top: 5rem;">
-
-    <div class="card border-info text-info text-center align-self-start" style="width: 28rem;">
-        <div class="card-header text-center">Update Pet
-          <a class="btn btn-sm btn-outline-danger ml-5" href="{{ url_for('welcome_user') }} "> X </a>
+  <div class="card border-info text-info text-center align-self-start" style="width: 28rem;">
+    <div class="card-header text-center">Update Pet
+      <a class="btn btn-sm btn-outline-danger ml-5" href="{{ url_for('welcome_user') }} "> X </a>
+    </div>
+    <div class="card-body text-info">
+      <form action="{{ url_for('update_pet', pet_id = pet.id) }}" method="post">
+        {{form.hidden_tag()}}
+        <div class="form-group row ">
+          {{form.name.label(class="col-sm-3 col-form-label")}}{{form.name(class="col-sm-4 form-control", value=pet.name)}}
         </div>
+        <div class="form-group row">
+          {{form.pet_type.label(class="col-sm-3 col-form-label")}}{{form.pet_type(class="custom-select col-sm-4", value=pet.pet_type)}}<br>
+        </div>
+        <div class="form-group row">
+          {{form.size.label(class="col-sm-3 col-form-label")}}{{form.size(class="custom-select col-sm-4", value=pet.size)}}<br>
+        </div>
+        <div class="form-group row">
+          {{form.weight.label(class="col-sm-3 col-form-label")}}{{form.weight(class="col-sm-4 form-control", value=pet.weight)}}
+        </div>
+        {{form.submit(class="btn btn-warning my-1", value="Update")}}
+        <a href="{{ url_for('delete_pet', pet_id = pet.id) }}" class="card-link btn btn-warning my-1">Delete</a>
+      </form>
+    </div>  
+  </div>
+
+  <div class="flex-column d-flex align-items-end">
+    {% for pet in pets %}
+    <div class="col-sm-l6">
+      <div class="card border-info mb-3" style="width: 12rem;">
+        <img class="img-fluid card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TBdfjBYxySYLtu52o314f0rTPJlkEs5ASQ&usqp=CAU" alt="Card image cap" style="height: auto; max-width: 100%;">
         <div class="card-body text-info">
-        <form action="{{ url_for('update_pet', pet_id = pet.id) }}" method="post">
-            {{form.hidden_tag()}}
-            <div class="form-group row ">
-            {{form.name.label(class="col-sm-3 col-form-label")}}{{form.name(class="col-sm-4 form-control", value=pet.name)}}
-            </div>
-            <div class="form-group row">
-            {{form.pet_type.label(class="col-sm-3 col-form-label")}}{{form.pet_type(class="custom-select col-sm-4", value=pet.pet_type)}}<br>
-            </div>
-            <div class="form-group row">
-            {{form.size.label(class="col-sm-3 col-form-label")}}{{form.size(class="custom-select col-sm-4", value=pet.size)}}<br>
-            </div>
-            <div class="form-group row">
-                {{form.weight.label(class="col-sm-3 col-form-label")}}{{form.weight(class="col-sm-4 form-control", value=pet.weight)}}
-            </div>
-            {{form.submit(class="btn btn-warning my-1", value="Update")}}
-            <a href="{{ url_for('delete_pet', pet_id = pet.id) }}" class="card-link btn btn-warning my-1">Delete</a>
-        </form>
+          <h5 class="card-title">{{ pet.name }}</h5>
+          <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link">Update</a>
         </div>
-        
+      </div>
     </div>
-
-    <div class="flex-column d-flex align-items-end">
-
-        {% for pet in pets %}
-    
-          <div class="col-sm-l6">
-            <div class="card border-info mb-3" style="width: 12rem;">
-            <img class="img-fluid card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TBdfjBYxySYLtu52o314f0rTPJlkEs5ASQ&usqp=CAU" alt="Card image cap" style="height: auto; max-width: 100%;">
-            <div class="card-body text-info">
-              <h5 class="card-title">{{ pet.name }}</h5>
-              <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link">Update</a>
-            </div>
-            </div>
-          </div>
-        
-
-        <br> 
-        {% endfor %}
-    </div>
-
-
+    <br> 
+    {% endfor %}
+  </div>
 </div>
-
 {% endblock %}

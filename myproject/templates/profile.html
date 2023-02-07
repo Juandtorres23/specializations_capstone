@@ -2,19 +2,18 @@
 
 {% block content %}
 
-    <div>
-        {% if current_user.is_authenticated %}
-        <h1> Hi {{current_user.username}} </h1> 
-        {% else %}
-        <p> Please login or register </p>
-        {% endif %}
-    </div>
+  <div class="row d-flex justify-content-lg-start pl-5 pb-3 pt-2">
+      {% if current_user.is_authenticated %}
+      <h2> Hello </h2> <h1 class="pl-3" style="font-weight: 700; font-style: italic; text-decoration:underline;">{{current_user.username}} </h1>
+      {% else %}
+      <p> Please login or register </p>
+      {% endif %}
+  </div>
 
     
-    <ul>
-      <h2> Upcoming Appointments</h2>
-
-      <div class="row d-flex justify-content-between">
+  <div class="d-block" style="overflow-y: auto;">
+    <h2 class=" card-header pb-4 text-info"> UPCOMING APPOINTMENTS:</h2>
+    <div class="card-body row d-flex justify-content-between pl-4">
       {% for service in services %}
       <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
         <div class="card-header">{{ service.date.strftime("%m/%d/%Y") }}  {{ service.time.strftime("%I:%M %p") }}</div>
@@ -27,19 +26,15 @@
       </div>
       <br> 
       {% endfor %}
-      </div>
+    </div>
+  </div>
 
-    </ul>
-
-    <ul>
-
-        <h2> Pets</h2>
-        <div class="row d-flex justify-content-between">
-
-        {% for pet in pets %}
-    
-          <div class="col-sm-l6">
-            <div class="card border-info mb-3" style="width: 14rem;">
+  <div class="d-block" style="overflow-y: auto;">
+    <h2 class="card-header pb-4 text-info"> PETS:</h2>
+    <div class="row d-flex justify-content-between pl-4">
+      {% for pet in pets %}
+        <div class="col-sm-l6">
+          <div class="card border-info mb-3" style="width: 14rem;">
             <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TBdfjBYxySYLtu52o314f0rTPJlkEs5ASQ&usqp=CAU" alt="Card image cap">
             <div class="card-body text-info">
               <h5 class="card-title text-warning">{{ pet.name }}</h5>
@@ -53,16 +48,13 @@
             <div class="card-body">
               <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link text-warning">Update</a>
             </div>
-            </div>
           </div>
-        
-
-        <br> 
-        {% endfor %}
+        </div>
+      <br> 
+    {% endfor %}
     </div>
-
-    </ul>
-<br>
+  </div>
+  <br>
 
 {% block modal %} {% endblock %}
 {% endblock %}
