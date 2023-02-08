@@ -11,11 +11,11 @@
   </div>
 
     
+  <h2 class=" card-header pb-4 text-info"> UPCOMING APPOINTMENTS:</h2>
   <div class="d-block" style="overflow-y: auto;">
-    <h2 class=" card-header pb-4 text-info"> UPCOMING APPOINTMENTS:</h2>
-    <div class="card-body row d-flex justify-content-between pl-4">
+    <div class="card-body row d-flex flex-nowrap justify-content-between pl-4">
       {% for service in services %}
-      <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+      <div class="card text-white bg-info mb-3 mr-3" style="max-width: 18rem; min-width: 15rem;">
         <div class="card-header">{{ service.date.strftime("%m/%d/%Y") }}  {{ service.time.strftime("%I:%M %p") }}</div>
         <div class="card-body">
           <h4 class="card-title text-warning">{{ service.pet_name }}</h4>
@@ -29,7 +29,7 @@
     </div>
   </div>
 
-  <div class="d-block" style="overflow-y: auto;">
+  <div class="d-block">
     <h2 class="card-header pb-4 text-info"> PETS:</h2>
     <div class="row d-flex justify-content-between pl-4">
       {% for pet in pets %}

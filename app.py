@@ -1,6 +1,7 @@
 from myproject import app, db, connect_to_db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user, current_user
+from datetime import timedelta 
 from myproject.model import User, Pet, Service
 from myproject.forms import LoginForm, RegistrationForm, AddPetForm, AddServiceForm, get_service_form, get_pet_form
 
@@ -13,7 +14,7 @@ def home():
 def welcome_user():
     pets = current_user.get_pets()
     services = current_user.get_services()
-    return render_template('profile.html', pets=pets, services=services)
+    return render_template('profile.html', pets=pets, services=services, name=current_user.username)
 
 @app.route('/logout')
 @login_required
@@ -25,10 +26,11 @@ def logout():
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
+
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.check_password(form.password.data):
-            login_user(user)
+            login_user(user, remember=form.remember_me.data)
             next = request.args.get('next')
             if next == None or not next[0]=='/':
                 next = url_for('welcome_user')

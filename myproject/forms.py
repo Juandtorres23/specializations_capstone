@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, DateField, TimeField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, DateField, TimeField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 
@@ -56,6 +56,7 @@ def get_service_form(services, name, clock, note):
 class LoginForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
+    remember_me= BooleanField('Remember me')
     submit = SubmitField('Log In')
 
 class RegistrationForm(FlaskForm):

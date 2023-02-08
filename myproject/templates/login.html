@@ -13,8 +13,7 @@
         </div>
         <!-- add a possible remember me  -->
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Remember me </label>
+            {{form.remember_me.label(class="form-check-label")}}{{form.remember_me(type="checkbox", class="form-check-input")}}
         </div>
         {{form.submit(type="submit", class="btn-lg btn-primary btn-block")}}
         <a class="text-muted" href="{{url_for('register')}}"> Register</a>
