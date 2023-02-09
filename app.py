@@ -2,6 +2,9 @@ from myproject import app, db, connect_to_db
 from flask import render_template, redirect, request, url_for, flash, abort
 from flask_login import login_user, login_required, logout_user, current_user
 from datetime import timedelta 
+from flask_uploads import configure_uploads, IMAGES, UploadSet 
+from werkzeug.utils import secure_filename
+
 from myproject.model import User, Pet, Service
 from myproject.forms import LoginForm, RegistrationForm, AddPetForm, AddServiceForm, get_service_form, get_pet_form
 
@@ -69,6 +72,7 @@ def add_pet():
                     pet_type=form.pet_type.data,
                     size=form.size.data,
                     weight=form.weight.data,
+                    pet_description=form.pet_description.data,
                     user_id=current_user.id)
 
         db.session.add(pet)

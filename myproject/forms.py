@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, DateField, TimeField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, TextAreaField, DateField, TimeField, BooleanField, FileField
+
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
 
@@ -15,6 +16,7 @@ class AddPetForm(FlaskForm):
                         choices=[('Small', 'Small'), ('Medium', 'Medium'),
                         ('Large', 'Large')], validators=[DataRequired()]) 
     weight = StringField('Weight:', validators = [DataRequired()])
+    pet_description = TextAreaField('Description:')
     submit = SubmitField('Add Pet')
 
 def get_pet_form(type_pet, pet_size):
