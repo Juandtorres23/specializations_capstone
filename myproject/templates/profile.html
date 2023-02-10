@@ -33,9 +33,15 @@
     <h2 class="card-header pb-4 text-info"> PETS:</h2>
     <div class="row d-flex justify-content-between pl-4">
       {% for pet in pets %}
-        <div class="col-sm-l6">
+        <div class="col-sm-l6 card-deck">
           <div class="card border-info mb-3" style="width: 14rem;">
-            <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6TBdfjBYxySYLtu52o314f0rTPJlkEs5ASQ&usqp=CAU" alt="Card image cap">
+
+            {% if pet.pet_pic %}
+            <img class="card-img-top" src="{{ url_for('static', filename='images/' + pet.pet_pic)}}" alt="Card image cap" style="min-height: 15rem;">
+            {% else %}
+            <img class="card-img-top" src="{{ url_for('static', filename='images/stock_pet_profile.jpg')}}" alt="Card image cap">
+            {% endif %}
+
             <div class="card-body text-info">
               <h5 class="card-title text-warning">{{ pet.name }}</h5>
               <p class="card-text"> {{ pet.pet_description}}</p>

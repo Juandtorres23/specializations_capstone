@@ -10,19 +10,28 @@
                 {{ form.csrf_token }}
                 {{form.hidden_tag()}}
                 <div class="form-group row ">
-                    {{form.name.label(class="col-sm-3 col-form-label")}}{{form.name(class="col-sm-4 form-control", placeholder="Pet Name")}}
+                    {{form.name.label(class="col-sm-3 col-form-label")}}
+                    {{form.name(class="col-sm-4 form-control", placeholder="Pet Name")}}
                 </div>
                 <div class="form-group row">
-                    {{form.pet_type.label(class="col-sm-3 col-form-label")}}{{form.pet_type(class="custom-select col-sm-4", placeholder="Choose One")}}<br>
+                    {{form.pet_type.label(class="col-sm-3 col-form-label")}}
+                    {{form.pet_type(class="custom-select col-sm-4", placeholder="Choose One")}}<br>
                 </div>
                 <div class="form-group row">
-                    {{form.size.label(class="col-sm-3 col-form-label")}}{{form.size(class="custom-select col-sm-4", placeholder="Choose One")}}<br>
+                    {{form.size.label(class="col-sm-3 col-form-label")}}
+                    {{form.size(class="custom-select col-sm-4", placeholder="Choose One")}}<br>
                 </div>
                 <div class="form-group row">
-                    {{form.weight.label(class="col-sm-3 col-form-label")}}{{form.weight(class="col-sm-4 form-control", placeholder="Pet Weight")}} LB
+                    {{form.weight.label(class="col-sm-3 col-form-label")}}
+                    {{form.weight(class="col-sm-4 form-control", placeholder="Pet Weight")}} LB
                 </div>
                 <div class="form-group row">
-                    {{form.pet_description.label(class="col-sm-4 col-form-label")}}{{form.pet_description(class="col-sm-8 form-control", placeholder="Description")}}
+                    {{form.pet_description.label(class="col-sm-4 col-form-label")}}
+                    {{form.pet_description(class="col-sm-8 form-control", placeholder="Description")}}
+                </div>
+                <div class="form-group row">
+                    {{form.pet_img.label(class="col-sm-4 col-form-label")}}
+                    {{form.pet_img(class="col-sm-8 form-control-file")}}
                 </div>
                 {{form.submit(class="btn btn-warning my-1", value="Add Pet")}}
             </form>
@@ -32,4 +41,5 @@
         <img class="img-fluid" src="https://burst.shopifycdn.com/photos/french-bulldog-gets-cozy.jpg?width=925&format=pjpg&exif=1&iptc=1"> 
     </div>
 </div>
+
 {% endblock %}

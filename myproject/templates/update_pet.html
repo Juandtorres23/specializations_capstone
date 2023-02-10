@@ -1,24 +1,41 @@
 {% extends  "base.html" %}
 {% block content %}
 <div class="d-flex justify-content-lg-around" style="padding-top: 5rem;">
-  <div class="card border-info text-info text-center align-self-start" style="width: 28rem;">
+  <div class="card border-info text-info text-center align-self-start" style="width: 30rem;">
     <div class="card-header text-center">Update Pet
       <a class="btn btn-sm btn-outline-danger ml-5" href="{{ url_for('welcome_user') }} "> X </a>
     </div>
     <div class="card-body text-info">
-      <form action="{{ url_for('update_pet', pet_id = pet.id) }}" method="post">
+      <form action="{{ url_for('update_pet', pet_id = pet.id) }}" method="post" enctype="multipart/form-data">
         {{form.hidden_tag()}}
         <div class="form-group row ">
-          {{form.name.label(class="col-sm-3 col-form-label")}}{{form.name(class="col-sm-4 form-control", value=pet.name)}}
+          {{form.name.label(class="col-sm-3 col-form-label")}}
+          {{form.name(class="col-sm-4 form-control", value=pet.name)}}
         </div>
         <div class="form-group row">
-          {{form.pet_type.label(class="col-sm-3 col-form-label")}}{{form.pet_type(class="custom-select col-sm-4", value=pet.pet_type)}}<br>
+          {{form.pet_type.label(class="col-sm-3 col-form-label")}}
+          {{form.pet_type(class="custom-select col-sm-4", value=pet.pet_type)}}<br>
         </div>
         <div class="form-group row">
-          {{form.size.label(class="col-sm-3 col-form-label")}}{{form.size(class="custom-select col-sm-4", value=pet.size)}}<br>
+          {{form.size.label(class="col-sm-3 col-form-label")}}
+          {{form.size(class="custom-select col-sm-4", value=pet.size)}}<br>
         </div>
         <div class="form-group row">
-          {{form.weight.label(class="col-sm-3 col-form-label")}}{{form.weight(class="col-sm-4 form-control", value=pet.weight)}}
+          {{form.weight.label(class="col-sm-3 col-form-label")}}
+          {{form.weight(class="col-sm-4 form-control", value=pet.weight)}}
+        </div>
+        <div class="form-group row">
+          {{form.pet_description.label(class="col-sm-3 col-form-label")}}
+          {{form.pet_description(class="col-sm-6 form-control", value=pet.pet_description)}}
+        </div>
+        <div class="form-group row">
+          {{form.pet_img.label(class="col-sm-4 col-form-label")}}
+          {{form.pet_img(class="col-sm-8 form-control-file")}}
+          {% if pet.pet_pic %}
+          <img src="{{ url_for('static', filename='images/' + pet.pet_pic)}}" alt="Card image cap" style="width: 10rem; height: 10rem;">
+          {% else %}
+          <img src="{{ url_for('static', filename='images/stock_pet_profile.jpg')}}" alt="Card image cap" style="width: 10rem; height: 10rem;">
+          {% endif %}
         </div>
         {{form.submit(class="btn btn-warning my-1", value="Update")}}
         <a href="{{ url_for('delete_pet', pet_id = pet.id) }}" class="card-link btn btn-warning my-1">Delete</a>

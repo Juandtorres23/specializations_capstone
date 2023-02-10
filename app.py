@@ -1,5 +1,7 @@
-from myproject import app, db, connect_to_db
-from flask import render_template, redirect, request, url_for, flash, abort
+import os
+import uuid as uuid
+from myproject import app, db, connect_to_db, ALLOWED_EXTENSIONS, UPLOAD_FOLDER
+from flask import render_template, redirect, request, url_for, flash, abort, send_from_directory
 from flask_login import login_user, login_required, logout_user, current_user
 from datetime import timedelta 
 from flask_uploads import configure_uploads, IMAGES, UploadSet 
@@ -68,24 +70,45 @@ def register():
 def add_pet():
     form = AddPetForm()
     if form.validate_on_submit():
-        pet = Pet(name=form.name.data,
-                    pet_type=form.pet_type.data,
-                    size=form.size.data,
-                    weight=form.weight.data,
-                    pet_description=form.pet_description.data,
-                    user_id=current_user.id)
+        if request.files['pet_img']:
+            pet_pic = request.files['pet_img']
+            pic_filename = secure_filename(pet_pic.filename)
+            pic_name = str(uuid.uuid1()) + "_" + pic_filename
+            saver = request.files['pet_img']
 
-        db.session.add(pet)
-        db.session.commit()
-        flash('Pet added!')
-        return redirect(url_for('add_pet'))
+            pet = Pet(name=form.name.data,
+                        pet_type=form.pet_type.data,
+                        size=form.size.data,
+                        weight=form.weight.data,
+                        pet_description=form.pet_description.data,
+                        user_id=current_user.id,
+                        pet_pic=pic_name)
+
+            db.session.add(pet)
+            db.session.commit()
+            saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+            flash('Pet added!')
+            return redirect(url_for('add_pet'))
+        else:
+            pet = Pet(name=form.name.data,
+                        pet_type=form.pet_type.data,
+                        size=form.size.data,
+                        weight=form.weight.data,
+                        pet_description=form.pet_description.data,
+                        user_id=current_user.id,
+                        pet_pic=None)
+            db.session.add(pet)
+            db.session.commit()
+            flash('Pet added!')
+            return redirect(url_for('add_pet'))
     return render_template('add_pet.html', form=form)
+
 
 @app.route('/update_pet/<pet_id>', methods = ['GET', 'POST'])
 def update_pet(pet_id):
     pets = current_user.get_pets()
     pet = Pet.query.filter_by(id=pet_id).first()
-    form = get_pet_form(pet.pet_type, pet.size)
+    form = get_pet_form(pet.pet_type, pet.size, pet.pet_description)
 
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -93,10 +116,22 @@ def update_pet(pet_id):
             pet.pet_type = form.pet_type.data,
             pet.size = form.size.data,
             pet.weight=form.weight.data,
-        
-            db.session.commit()
-            flash("Updated pet successfully!")
-            return redirect(url_for('update_pet', pet_id=pet.id))
+            pet.pet_description=form.pet_description.data,
+            if request.files['pet_img']:
+                pet.pet_pic=request.files['pet_img']
+                pic_filename = secure_filename(pet.pet_pic.filename)
+                pic_name = str(uuid.uuid1()) + "_" + pic_filename
+                pet.pet_pic = pic_name
+                saver = request.files['pet_img']
+                
+                db.session.commit()
+                saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                flash("Updated pet successfully!")
+                return redirect(url_for('update_pet', pet_id=pet.id))
+            else:
+                db.session.commit()
+                flash("Updated pet successfully!")
+                return redirect(url_for('update_pet', pet_id=pet.id))
         else:
             return redirect(url_for('welcome_user'))
     else:
@@ -174,7 +209,6 @@ def delete_service(service_id):
     except:
         flash("Whoops! There was a problem deleting appointment. Try again!")
         return render_template('profile.html', service_id=service_id)
-
 
 if __name__ == '__main__':
     connect_to_db(app)

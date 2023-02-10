@@ -49,6 +49,7 @@ class Pet(db.Model):
     size = db.Column(db.String(255), nullable = False)
     weight = db.Column(db.Float, nullable = False)
     pet_description = db.Column(db.String(255))
+    pet_pic = db.Column(db.String(), nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
 
@@ -57,13 +58,14 @@ class Pet(db.Model):
     def get_services(self):
         return Service.query.filter_by(pet_id=self.id).all()
 
-    def __init__(self, name, pet_type, size, weight, user_id, pet_description):
+    def __init__(self, name, pet_type, size, weight, user_id, pet_description, pet_pic):
         self.name = name
         self.pet_type = pet_type
         self.size = size
         self.weight = weight
         self.user_id = user_id
         self.pet_description = pet_description
+        self.pet_pic = pet_pic
 
     def __repr__(self):
         return f"{self.name} a {self.pet_type} was added!"
