@@ -1,7 +1,7 @@
 {% extends  "base.html" %}
 {% block content %}
 <div class="d-flex justify-content-lg-around" style="padding-top: 2rem;">
-    <div class="card border-info text-info text-center" style="width: 28rem; ">
+    <div class="card border-info text-info text-center" style="width: 42rem; ">
         <div class="card-header text-center">Add Pet
             <a class="btn btn-sm btn-outline-danger ml-5" href="{{ url_for('welcome_user') }} "> X </a>
         </div>
@@ -26,12 +26,12 @@
                     {{form.weight(class="col-sm-4 form-control", placeholder="Pet Weight")}} LB
                 </div>
                 <div class="form-group row">
-                    {{form.pet_description.label(class="col-sm-4 col-form-label")}}
-                    {{form.pet_description(class="col-sm-8 form-control", placeholder="Description")}}
+                    {{form.pet_description.label(class="col-sm-3 col-form-label")}}
+                    {{form.pet_description(class="col-sm-6 form-control", placeholder="Description")}}
                 </div>
                 <div class="form-group row">
-                    {{form.pet_img.label(class="col-sm-4 col-form-label")}}
-                    {{form.pet_img(class="col-sm-8 form-control-file")}}
+                    {{form.pet_img.label(class="col-sm-3 col-form-label")}}
+                    {{form.pet_img(class="col-sm-7 form-control-file")}}
                 </div>
                 {{form.submit(class="btn btn-warning my-1", value="Add Pet")}}
             </form>

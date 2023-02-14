@@ -14,50 +14,62 @@
   <h2 class=" card-header pb-4 text-info"> UPCOMING APPOINTMENTS:</h2>
   <div class="d-block" style="overflow-y: auto;">
     <div class="card-body row d-flex flex-nowrap justify-content-between pl-4">
-      {% for service in services %}
-      <div class="card text-white bg-info mb-3 mr-3" style="max-width: 18rem; min-width: 15rem;">
-        <div class="card-header">{{ service.date.strftime("%m/%d/%Y") }}  {{ service.time.strftime("%I:%M %p") }}</div>
-        <div class="card-body">
-          <h4 class="card-title text-warning">{{ service.pet_name }}</h4>
-          <h5 class="card-title">{{ service.type_service }}</h5>
-          <p class="card-text">{{ service.notes }}</p>
-          <a class="text-warning" href="{{ url_for('update_service', service_id = service.id) }} "> Update </a>
+      {% if services %}
+        {% for service in services %}
+        <div class="card text-white bg-info mb-3 mr-3" style="max-width: 18rem; min-width: 15rem;">
+          <div class="card-header">{{ service.date.strftime("%m/%d/%Y") }}  {{ service.time.strftime("%I:%M %p") }}</div>
+          <div class="card-body">
+            <h4 class="card-title text-warning">{{ service.pet_name }}</h4>
+            <h5 class="card-title">{{ service.type_service }}</h5>
+            <p class="card-text">{{ service.notes }}</p>
+            <a class="text-warning" href="{{ url_for('update_service', service_id = service.id) }} "> Update </a>
+          </div>
         </div>
+        <br> 
+        {% endfor %}
+      {% else %}
+      <div class="card text-primary border-primary p-2">
+        <h4> No Upcoming Appointments!</h4>
       </div>
-      <br> 
-      {% endfor %}
+      {% endif %}
     </div>
   </div>
 
   <div class="d-block">
     <h2 class="card-header pb-4 text-info"> PETS:</h2>
     <div class="row d-flex justify-content-between pl-4">
-      {% for pet in pets %}
-        <div class="col-sm-l6 card-deck">
-          <div class="card border-info mb-3" style="width: 14rem;">
+      {% if pets%}
+        {% for pet in pets %}
+          <div class="col-sm-l6 card-deck">
+            <div class="card border-info mb-3" style="width: 14rem;">
 
-            {% if pet.pet_pic %}
-            <img class="card-img-top" src="{{ url_for('static', filename='images/' + pet.pet_pic)}}" alt="Card image cap" style="min-height: 15rem;">
-            {% else %}
-            <img class="card-img-top" src="{{ url_for('static', filename='images/stock_pet_profile.jpg')}}" alt="Card image cap">
-            {% endif %}
+              {% if pet.pet_pic %}
+              <img class="card-img-top" src="{{ url_for('static', filename='images/' + pet.pet_pic)}}" alt="Card image cap" style="min-height: 15rem;">
+              {% else %}
+              <img class="card-img-top" src="{{ url_for('static', filename='images/stock_pet_profile.jpg')}}" alt="Card image cap">
+              {% endif %}
 
-            <div class="card-body text-info">
-              <h5 class="card-title text-warning">{{ pet.name }}</h5>
-              <p class="card-text"> {{ pet.pet_description}}</p>
-            </div>
-            <ul class="list-group list-group-flush text-info">
-              <li class="list-group-item">Pet Type: {{ pet.pet_type }}</li>
-              <li class="list-group-item">Pet Size: {{ pet.size }}</li>
-              <li class="list-group-item">Pet Weight: {{ pet.weight }} LB</li>
-            </ul>
-            <div class="card-body">
-              <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link text-warning">Update</a>
+              <div class="card-body text-info">
+                <h5 class="card-title text-warning">{{ pet.name }}</h5>
+                <p class="card-text"> {{ pet.pet_description}}</p>
+              </div>
+              <ul class="list-group list-group-flush text-info">
+                <li class="list-group-item">Pet Type: {{ pet.pet_type }}</li>
+                <li class="list-group-item">Pet Size: {{ pet.size }}</li>
+                <li class="list-group-item">Pet Weight: {{ pet.weight }} LB</li>
+              </ul>
+              <div class="card-body">
+                <a href="{{ url_for('update_pet', pet_id = pet.id) }}" class="card-link text-warning">Update</a>
+              </div>
             </div>
           </div>
-        </div>
-      <br> 
-    {% endfor %}
+        <br> 
+        {% endfor %}
+      {% else %}
+      <div class="card text-primary border-primary p-2">
+        <h4> No pet added yet!</h4>
+      </div>
+      {% endif %}  
     </div>
   </div>
   <br>

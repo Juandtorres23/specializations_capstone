@@ -1,10 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-    <div>
+    <div class="pt-4 pb-4">
         {% if current_user.is_authenticated %}
-            <p> Hi {{current_user.username}} </p>
+            <h3> Hello, {{current_user.username}}</h3>
         {% else %}
-            <p> Please login or register </p>
+            <h3> Please login or register! </h3>
         {% endif %}
     </div>
+
+    <div class="card bg-dark text-white mb-5">
+        <img class="card-img img-fluid" src="{{ url_for('static', filename='images/pet_boarding.jpg')}}" alt="Card image" style="max-height: 15rem; object-fit: cover; opacity:.7;">
+        <div class="card-img-overlay">
+          <h5 class="card-title">Pet Boarding</h5>
+          <p class="card-text"> Keep your pet at our Pet Boarding location and have the piece of mind that your pet is being taken care of. Daily walkes and play time with other pets in our facility </p>
+          <a href="{{url_for('add_service')}}" class="btn btn-warning">Book</a>
+        </div>
+      </div>
+      <br>
+
+      <div class="card bg-dark text-white mb-5">
+        <img class="card-img img-fluid" src="{{ url_for('static', filename='images/house_sitting.jpg')}}" alt="Card image" style="max-height: 15rem; object-fit: cover; opacity:.7; object-position: 0px 80%;">
+        <div class="card-img-overlay">
+          <h5 class="card-title">House Sitting </h5>
+          <p class="card-text">Dont want to drop your pet off? No problem! We have our House Sitting service, we will go over and make sure that pet is doing well, fed and take them for a walk (if applicable).</p>
+          <a href="{{url_for('add_service')}}" class="btn btn-warning">Book</a>
+        </div>
+      </div>
+      <br>
+
+      <div class="card bg-dark text-white mb-5">
+        <img class="card-img img-fluid" src="{{ url_for('static', filename='images/dog_walking.jpg')}}" alt="Card image" style="max-height: 15rem; object-fit: cover; opacity:.7;">
+        <div class="card-img-overlay">
+          <h5 class="card-title">Dog Walking</h5>
+          <p class="card-text">We also have our Dog Walking service. We come over and take your pet on a nice long walk.</p>
+          <a href="{{url_for('add_service')}}" class="btn btn-warning">Book</a>       
+        </div>
+      </div>
+      <br>
 {% endblock %}

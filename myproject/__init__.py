@@ -2,7 +2,7 @@ import os
 from flask import Flask 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
+from datetime import timedelta
 login_manager = LoginManager()
 
 app = Flask(__name__)
@@ -10,6 +10,7 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 UPLOAD_FOLDER= r'C:\Users\JDTGaming\Desktop\devMountain\Specialization\Unit 6\Capstone\myproject\static\images'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(seconds=10)
 db = SQLAlchemy()
 
 def connect_to_db(flask_app):
