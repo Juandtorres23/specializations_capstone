@@ -59,8 +59,9 @@ def get_service_form(services, name, clock, note):
 class LoginForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
     password = PasswordField('Password', validators = [DataRequired()])
-    remember_me= BooleanField('Remember me')
     submit = SubmitField('Log In')
+
+# remember_me= BooleanField('Remember me')
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators = [DataRequired(), Email()])
